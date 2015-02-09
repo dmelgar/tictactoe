@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>TicTacToe WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>TicTacToe.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>3310EF831A87BF8A005CF236</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>337963CB1A885A5F0049E306</key>
 		<dict>
 			<key>primary</key>
 			<true/>
