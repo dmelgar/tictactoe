@@ -1,0 +1,13 @@
+Sample Tic Tac Toe app written in Swift
+
+Core algorithm is in TTTEngine. It implements a MiniMax algorithm to recursively iterate through all possible moves. It will seek winning moves while avoiding losing moves. The result is unbeatable, but not optimal.
+
+Board maintains the TicTacToe board, including determining if someone has won, if its a draw and if moves are valid. It interprets touches and forwards them to its delegate.
+
+TTTBoardView is a custom view which uses Core Graphics to draw the board and pieces.
+
+ViewController programmatically creates the app's view and manages game play. Move evaluation is done on a background thread and the result posted back on the main thread via GCD.
+
+Placehold is present for an Apple Watch extension but not implemented. 
+
+This project is built with and requires Swift 1.2 first introduced on 2/10/2015 as part of Xcode 6.3 beta.
