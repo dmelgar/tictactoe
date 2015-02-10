@@ -12,6 +12,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
     var boardView: TTTBoardView = TTTBoardView()
     var engine: TTTEngine = TTTEngine()
     var board: Board = Board()
+    var isWon = false
     var info: UILabel = UILabel()
     var restartButton: UIButton = UIButton()
 
@@ -82,6 +83,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         boardView.board = board
         boardView.setNeedsDisplay()
         info.text = "New game started"
+        isWon = false
     }
     
     // Add set array of visual constraints using same view and view dictionary
@@ -99,6 +101,9 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
 
     // Delegate
     func playerMoved(playerMove: Int) {
+        if isWon {
+            return
+        }
         var status = board.move(playerMove, player: .P)
         if status != .Invalid {
             boardView.board = board
@@ -117,19 +122,23 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         case .Valid:
             // Figure out computer's move
             // Update the view
-            boardView.setNeedsDisplay()
-            
-            let computerMove = engine.findBestMove(board, player: .C).move
-            status = board.move(computerMove, player: .C)
-            switch status {
-            case .Draw:
-                info.text = "Draw"
-            case .CWon:
-                info.text = "Computer Won."
-            default: ()
-            }
-            boardView.board = board
-            boardView.setNeedsDisplay()
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+                let computerMove = engine.findBestMove(board, player: .C).move
+                dispatch_async(dispatch_get_main_queue(), {
+                    status = self.board.move(computerMove, player: .C)
+                    switch status {
+                    case .Draw:
+                        self.info.text = "Draw"
+                    case .CWon:
+                        self.info.text = "Computer Won."
+                        self.isWon = true
+                    default:
+                        self.info.text = "Your turn"
+                    }
+                    self.boardView.board = self.board
+                    self.boardView.setNeedsDisplay()
+                })
+            })
         }
     }
 }

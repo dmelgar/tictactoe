@@ -99,16 +99,24 @@ class Board {
     }
 }
 
+protocol TTTEngineDelegate {
+    func computerMove(position: Int, status: Board.BoardState)
+}
+
 class TTTEngine {
     // Define data structures
-    enum state {
-        case PLAYING
-        case WON
-        case LOST
-        case DRAW
-    }
 
-    // var board = Board()
+    var board = Board()
+    var delegate: TTTEngineDelegate?
+    var state: Board.BoardState = .Valid
+    
+    //
+    func playerMove(position: Int) {
+        board.move(position, player: .P)
+        dispatch_async(DISPATCH_QUEUE_PRIORITY_BACKGROUND, {
+            let computerMove = self.findBestMove(board, player: .C)
+        })
+    }
     
     // Utility methods for scoring
     // Way to workaround inability of Swift 1.1 to initialize a non-optional variable to one of two values
