@@ -21,6 +21,7 @@
 		337963D51A885A5F0049E306 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 337963D31A885A5F0049E306 /* Interface.storyboard */; };
 		337963D71A885A5F0049E306 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 337963D61A885A5F0049E306 /* Images.xcassets */; };
 		337963DA1A885A5F0049E306 /* TicTacToe WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 337963C21A885A5F0049E306 /* TicTacToe WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		33BC02751A897CD100F29B41 /* TTTBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BC02741A897CD100F29B41 /* TTTBoardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		337963D21A885A5F0049E306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		337963D41A885A5F0049E306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		337963D61A885A5F0049E306 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		33BC02741A897CD100F29B41 /* TTTBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTBoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				3310EF7D1A87BF8A005CF236 /* LaunchScreen.xib */,
 				3310EF721A87BF8A005CF236 /* Supporting Files */,
 				3310EF961A87C9F2005CF236 /* TTTEngine.swift */,
+				33BC02741A897CD100F29B41 /* TTTBoardView.swift */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33BC02751A897CD100F29B41 /* TTTBoardView.swift in Sources */,
 				3310EF771A87BF8A005CF236 /* ViewController.swift in Sources */,
 				3310EF971A87C9F2005CF236 /* TTTEngine.swift in Sources */,
 				3310EF751A87BF8A005CF236 /* AppDelegate.swift in Sources */,
@@ -671,6 +675,7 @@
 				337963DD1A885A5F0049E306 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		337963DE1A885A5F0049E306 /* Build configuration list for PBXNativeTarget "TicTacToe WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -679,6 +684,7 @@
 				337963E01A885A5F0049E306 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

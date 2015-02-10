@@ -35,9 +35,9 @@ class Board {
     var board: [PositionState] = [PositionState](count: 9, repeatedValue: .E)
     
     func move(newMove: Int, player: PositionState) -> BoardState {
-        var result: BoardState = .Invalid
+        var result: BoardState = .Valid
         if !isValidMove(newMove) {
-            result = .Valid
+            result = .Invalid
         } else {
             board[newMove] = player
             if isDraw() {
@@ -51,9 +51,9 @@ class Board {
         return result
     }
     
-    func move(newMove: Int, player: PositionState) {
-        board[newMove] = player
-    }
+//    func move(newMove: Int, player: PositionState) {
+//        board[newMove] = player
+//    }
     
     func hasWon(player: PositionState) -> Bool {
         let winningPatterns = [
@@ -109,83 +109,10 @@ class TTTEngine {
     }
 
     // var board = Board()
-
-    // Given a board, find the best move
-    func findMaxMove(board: Board, depth: Int = 0) -> (move: Int, score: Int) {
-        if debug {
-            println("FindMaxMove")
-        }
-        var bestScore = -200
-        var bestMove: Int = -1
-        for move in 0...8 {
-            var score = -200
-            if board.isValidMove(move) {
-                var subBoard = Board(copy: board)
-                subBoard.board[move] = .C
-                if subBoard.hasWon(.C) {
-                    score = 100
-                } else if subBoard.isDraw() {
-                    score = 0
-                } else {
-                    score = findMinMove(subBoard, depth: depth + 1).score
-                }
-            }
-            if debug {
-                println("FindMaxMove Depth: \(depth) Move: \(move) Score: \(score)")
-            }
-            if score > bestScore {
-                // print("Test")
-                bestScore = score
-                bestMove = move
-                if bestScore == 100 {
-                    break // No need to find another winning move
-                }
-            }
-        }
-        if debug {
-            println("FindMaxMove Depth: \(depth) Best move: \(bestMove) Best score: \(bestScore)")
-        }
-        return (bestMove, bestScore)
-    }
-    
-    func findMinMove(board: Board, depth: Int = 0) -> (move: Int, score: Int) {
-        if debug {
-            println("FindMinMove")
-        }
-        var bestScore: Int = 200
-        var bestMove: Int = -1
-        for move in 0...8 {
-            var score = 200
-            if board.isValidMove(move) {
-                var subBoard = Board(copy: board)
-                subBoard.board[move] = .P
-                if subBoard.hasWon(.P) {
-                    score = -100
-                } else if subBoard.isDraw() {
-                    score = 0
-                } else {
-                    score = findMaxMove(subBoard, depth: depth + 1).score
-                }
-            }
-            if debug {
-                println("FindMinMove Depth: \(depth) Move: \(move) Score: \(score) BestScore: \(bestScore)")
-            }
-            if score < bestScore {
-                // print("Testing") // When this wasn't here it wasn't working
-                bestScore = score
-                bestMove = move
-                if bestScore == -100 {
-                    break   // Winning move, no need to try other moves
-                }
-            }
-        }
-        if debug {
-            println("FindMinMove Depth: \(depth) Best move: \(bestMove) Best score: \(bestScore)")
-        }
-        return (bestMove, bestScore)
-    }
     
     // Utility methods for scoring
+    // Way to workaround inability of Swift 1.1 to initialize a non-optional variable to one of two values
+    // In Swift 1.2, released 2/9/2015, this is no longer required
     private func worstScore(player: Board.PositionState) -> Int {
         if player == .C {
             return -200
