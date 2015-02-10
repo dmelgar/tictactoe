@@ -25,7 +25,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         
         boardView = TTTBoardView()
         boardView.delegate = self
-        boardView.backgroundColor = UIColor.lightGrayColor()
+        boardView.backgroundColor = UIColor.whiteColor()
         boardView.setTranslatesAutoresizingMaskIntoConstraints(false)
         view.addSubview(boardView)
         
