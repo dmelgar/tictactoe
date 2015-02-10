@@ -15,6 +15,8 @@
 		3310EF8B1A87BF8A005CF236 /* TicTacToeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310EF8A1A87BF8A005CF236 /* TicTacToeTests.swift */; };
 		3310EF971A87C9F2005CF236 /* TTTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310EF961A87C9F2005CF236 /* TTTEngine.swift */; };
 		3310EF981A87DA8E005CF236 /* TTTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310EF961A87C9F2005CF236 /* TTTEngine.swift */; };
+		336A0FF71A8A569600DC6503 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336A0FF61A8A569600DC6503 /* Board.swift */; };
+		336A0FF81A8A571900DC6503 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336A0FF61A8A569600DC6503 /* Board.swift */; };
 		337963C71A885A5F0049E306 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337963C61A885A5F0049E306 /* InterfaceController.swift */; };
 		337963C91A885A5F0049E306 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 337963C81A885A5F0049E306 /* Images.xcassets */; };
 		337963CD1A885A5F0049E306 /* TicTacToe WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 337963CC1A885A5F0049E306 /* TicTacToe WatchKit App.app */; };
@@ -74,6 +76,7 @@
 		3310EF891A87BF8A005CF236 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3310EF8A1A87BF8A005CF236 /* TicTacToeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeTests.swift; sourceTree = "<group>"; };
 		3310EF961A87C9F2005CF236 /* TTTEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTEngine.swift; sourceTree = "<group>"; };
+		336A0FF61A8A569600DC6503 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		337963C21A885A5F0049E306 /* TicTacToe WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TicTacToe WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		337963C51A885A5F0049E306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		337963C61A885A5F0049E306 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
@@ -135,14 +138,15 @@
 		3310EF711A87BF8A005CF236 /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
-				3310EF741A87BF8A005CF236 /* AppDelegate.swift */,
-				3310EF761A87BF8A005CF236 /* ViewController.swift */,
 				3310EF781A87BF8A005CF236 /* Main.storyboard */,
 				3310EF7B1A87BF8A005CF236 /* Images.xcassets */,
 				3310EF7D1A87BF8A005CF236 /* LaunchScreen.xib */,
-				3310EF721A87BF8A005CF236 /* Supporting Files */,
+				3310EF741A87BF8A005CF236 /* AppDelegate.swift */,
+				336A0FF61A8A569600DC6503 /* Board.swift */,
 				3310EF961A87C9F2005CF236 /* TTTEngine.swift */,
 				33BC02741A897CD100F29B41 /* TTTBoardView.swift */,
+				3310EF761A87BF8A005CF236 /* ViewController.swift */,
+				3310EF721A87BF8A005CF236 /* Supporting Files */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -371,6 +375,7 @@
 			files = (
 				33BC02751A897CD100F29B41 /* TTTBoardView.swift in Sources */,
 				3310EF771A87BF8A005CF236 /* ViewController.swift in Sources */,
+				336A0FF71A8A569600DC6503 /* Board.swift in Sources */,
 				3310EF971A87C9F2005CF236 /* TTTEngine.swift in Sources */,
 				3310EF751A87BF8A005CF236 /* AppDelegate.swift in Sources */,
 			);
@@ -382,6 +387,7 @@
 			files = (
 				3310EF981A87DA8E005CF236 /* TTTEngine.swift in Sources */,
 				3310EF8B1A87BF8A005CF236 /* TicTacToeTests.swift in Sources */,
+				336A0FF81A8A571900DC6503 /* Board.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

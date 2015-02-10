@@ -50,10 +50,6 @@ class TicTacToeTests: XCTestCase {
         XCTAssert(!board.hasWon(.C), "Pass")
     }
     
-    func testIsValidMove() {
-        XCTAssert(true, "Pass")
-    }
-    
     func testMinMove() {
         var board = Board()
         var engine = TTTEngine()
@@ -92,29 +88,6 @@ class TicTacToeTests: XCTestCase {
                 .C, .E, .P]
             self.nextMoveEvaluation(board, moveSet: [3], testcase: 12)
         })
-//        var board = Board()
-//        board.board = [
-//            .C, .C, .E,
-//            .P, .E, .E,
-//            .P, .E, .E]
-//        nextMoveEvaluation(board, moveSet: [2], testcase: 1)
-//        
-//        // Winning game sequence.
-//        board.board = [
-//            .E, .P, .E,
-//            .E, .C, .E,
-//            .E, .E, .E]
-//        nextMoveEvaluation(board, moveSet: [0, 2], testcase: 10)
-//        board.board = [
-//            .C, .P, .E,
-//            .E, .C, .E,
-//            .E, .E, .P]
-//        nextMoveEvaluation(board, moveSet: [3, 6], testcase: 11)
-//        board.board = [
-//            .C, .P, .P,
-//            .E, .C, .E,
-//            .C, .E, .P]
-//        nextMoveEvaluation(board, moveSet: [3], testcase: 12)
     }
     
     func nextMoveEvaluation(board: Board, moveSet: [Int], testcase: Int) {
@@ -126,17 +99,4 @@ class TicTacToeTests: XCTestCase {
         XCTAssertFalse(result == nil, "Fail testcase=\(testcase)")
         // XCTAssert(result != nil, "Pass")
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }

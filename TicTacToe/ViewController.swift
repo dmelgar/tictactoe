@@ -17,19 +17,16 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
     var restartButton: UIButton = UIButton()
 
     override func viewDidLoad() {
+        // Create view
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        // Add a TTTBoardView
-        
+
         view.autoresizesSubviews = true
         view.setTranslatesAutoresizingMaskIntoConstraints(false)
-        // boardView = TTTBoardView(frame: CGRectMake(0, 0, 300, 300))
+        
         boardView = TTTBoardView()
         boardView.delegate = self
         boardView.backgroundColor = UIColor.lightGrayColor()
         boardView.setTranslatesAutoresizingMaskIntoConstraints(false)
-
         view.addSubview(boardView)
         
         info = UILabel()
@@ -37,15 +34,16 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         info.numberOfLines = 0
         info.setContentCompressionResistancePriority(100, forAxis: UILayoutConstraintAxis.Horizontal)
         info.setTranslatesAutoresizingMaskIntoConstraints(false)
-
+        view.addSubview(info)
+        
         restartButton = UIButton()
         restartButton.setTitle("New Game", forState: .Normal)
         restartButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
         restartButton.addTarget(self, action: "restart", forControlEvents: .TouchUpInside)
+        
+        // Swift bug, Xcode 6.3. Cannot use priority constant, needs to be value
         restartButton.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
         restartButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-
-        view.addSubview(info)
         view.addSubview(restartButton)
     
         let viewsDictionary = ["info": info, "button": restartButton, "board": boardView]
@@ -57,10 +55,12 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
 
         let constraints = getVisualConstraintArray(vcArray: visualConstraints, options: nil, metrics: nil, viewDictionary: viewsDictionary)
         
+        // Constrain board to be square
         let aspectRatio = NSLayoutConstraint(item: boardView, attribute: NSLayoutAttribute.Height,
-            relatedBy: NSLayoutRelation.LessThanOrEqual, toItem: boardView, attribute: NSLayoutAttribute.Width, multiplier: 1.0, constant: 0.0)
-        // aspectRatio.priority = 100
+            relatedBy: NSLayoutRelation.Equal, toItem: boardView, attribute: NSLayoutAttribute.Width, multiplier: 1.0, constant: 0.0)
         boardView.addConstraint(aspectRatio)
+        
+        // Constrain board to be centered relative to parent view
         var constraint = NSLayoutConstraint(item: boardView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
         view.addConstraint(constraint)
         view.addConstraints(constraints)
@@ -71,13 +71,6 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-        view.setNeedsUpdateConstraints()
-        view.setNeedsLayout()
-        view.setNeedsDisplay()
-        boardView.setNeedsDisplay()
-    }
-    
     func restart() {
         board = Board()
         boardView.board = board
@@ -86,7 +79,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         isWon = false
     }
     
-    // Add set array of visual constraints using same view and view dictionary
+    // Utility method: Add set array of visual constraints using same view and view dictionary
     func getVisualConstraintArray(#vcArray: [String], options opts: NSLayoutFormatOptions, metrics: [NSObject: AnyObject]?,
         viewDictionary: [NSObject: AnyObject]) -> [AnyObject] {
             var result = [AnyObject]()
@@ -99,7 +92,8 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
     }
 
 
-    // Delegate
+    //MARK: Delegate method
+    // Called by boardView when player has moved
     func playerMoved(playerMove: Int) {
         if isWon {
             return
@@ -117,7 +111,6 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         case .Draw:
             info.text = "Draw"
         case .Invalid:
-            // Maybe don't say anything. Just doesn't work
             info.text = "Space is occupied"
         case .Valid:
             // Figure out computer's move
