@@ -56,7 +56,7 @@ class TTTBoardView: UIView {
         // Draw a TTT board
         UIColor.blackColor().set()
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(context, 5.0)
+        CGContextSetLineWidth(context, 2.0)
         
         // Draw pieces on the board
         for move in 0...8 {
