@@ -15,6 +15,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
     var isWon = false
     var info: UILabel = UILabel()
     var restartButton: UIButton = UIButton()
+    var busy = false
 
     override func viewDidLoad() {
         // Create view
@@ -95,7 +96,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
     //MARK: Delegate method
     // Called by boardView when player has moved
     func playerMoved(playerMove: Int) {
-        if isWon {
+        if isWon || busy {
             return
         }
         var status = board.move(playerMove, player: .P)
@@ -115,9 +116,11 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         case .Valid:
             // Figure out computer's move
             // Update the view
+            self.busy = true
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
                 let computerMove = engine.findBestMove(board, player: .C).move
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.busy = false
                     status = self.board.move(computerMove, player: .C)
                     switch status {
                     case .Draw:

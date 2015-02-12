@@ -95,7 +95,6 @@ class TTTBoardView: UIView {
         
         strokes.append([startX, startY, endX, endY])
         strokes.append([endX, startY, startX, endY])
-        println(strokes)
         return strokes
     }
     
