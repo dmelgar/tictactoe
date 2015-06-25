@@ -109,11 +109,11 @@ class TTTBoardView: UIView {
     }
     
     // Handle touch
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // Ignore multi-touch
-        let touches = event.allTouches() as? Set<UITouch>
-        if touches?.count == 1 {
-            if let point = touches?.first?.locationInView(self) {
+        // let touches = event!.allTouches() as? Set<UITouch>
+        if touches.count == 1 {
+            if let point = touches.first?.locationInView(self) {
                 // Figure out which square the touch is in
                 let playerMove = convertPointToSquare(point)
                 // Let the listener know
@@ -128,7 +128,7 @@ class TTTBoardView: UIView {
         let row: Int = Int(point.y / squareSize)
         let square = row * 3 + col
         if true {
-            println("TTTBoardView.convertPointToSquare square:\(square)")
+            print("TTTBoardView.convertPointToSquare square:\(square)")
         }
         return square
     }

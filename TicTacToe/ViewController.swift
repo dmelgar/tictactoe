@@ -22,19 +22,19 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         super.viewDidLoad()
 
         view.autoresizesSubviews = true
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         
         boardView = TTTBoardView()
         boardView.delegate = self
         boardView.backgroundColor = UIColor.whiteColor()
-        boardView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        boardView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(boardView)
         
         info = UILabel()
         info.text = "Welcome to Tic Tac Toe. Try to beat the computer... if you dare"
         info.numberOfLines = 0
         info.setContentCompressionResistancePriority(100, forAxis: UILayoutConstraintAxis.Horizontal)
-        info.setTranslatesAutoresizingMaskIntoConstraints(false)
+        info.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(info)
         
         restartButton = UIButton()
@@ -44,7 +44,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         
         // Swift bug, Xcode 6.3. Cannot use priority constant, needs to be value
         restartButton.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
-        restartButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        restartButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(restartButton)
     
         let viewsDictionary = ["info": info, "button": restartButton, "board": boardView]
@@ -54,7 +54,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
             "H:|-[info]-(>=8)-[button]-|",
             "V:|-30-[info]-[board]-30-|"]
 
-        let constraints = getVisualConstraintArray(vcArray: visualConstraints, options: nil, metrics: nil, viewDictionary: viewsDictionary)
+        let constraints = getVisualConstraintArray(vcArray: visualConstraints, options: [], metrics: nil, viewDictionary: viewsDictionary)
         
         // Constrain board to be square
         let aspectRatio = NSLayoutConstraint(item: boardView, attribute: NSLayoutAttribute.Height,
@@ -62,7 +62,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         boardView.addConstraint(aspectRatio)
         
         // Constrain board to be centered relative to parent view
-        var constraint = NSLayoutConstraint(item: boardView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let constraint = NSLayoutConstraint(item: boardView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
         view.addConstraint(constraint)
         view.addConstraints(constraints)
     }
@@ -81,9 +81,9 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
     }
     
     // Utility method: Add set array of visual constraints using same view and view dictionary
-    func getVisualConstraintArray(#vcArray: [String], options opts: NSLayoutFormatOptions, metrics: [NSObject: AnyObject]?,
-        viewDictionary: [NSObject: AnyObject]) -> [AnyObject] {
-            var result = [AnyObject]()
+    func getVisualConstraintArray(vcArray vcArray: [String], options opts: NSLayoutFormatOptions, metrics: [String: AnyObject]?,
+        viewDictionary: [String: AnyObject]) -> [NSLayoutConstraint] {
+            var result = [NSLayoutConstraint]()
             for visualConstraint in vcArray {
                 let newConstraints = NSLayoutConstraint.constraintsWithVisualFormat(visualConstraint,
                     options: opts, metrics: metrics, views: viewDictionary)
@@ -118,7 +118,7 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
             // Update the view
             self.busy = true
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
-                let computerMove = engine.findBestMove(board, player: .C).move
+                let computerMove = self.engine.findBestMove(self.board, player: .C).move
                 dispatch_async(dispatch_get_main_queue(), {
                     self.busy = false
                     status = self.board.move(computerMove, player: .C)
@@ -138,4 +138,5 @@ class ViewController: UIViewController, TTTBoardViewDelegate {
         }
     }
 }
+
 

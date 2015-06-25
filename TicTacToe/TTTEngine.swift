@@ -25,7 +25,7 @@ class TTTEngine {
     func playerMove(position: Int) {
         board.move(position, player: .P)
         dispatch_async(DISPATCH_QUEUE_PRIORITY_BACKGROUND, {
-            let computerMove = self.findBestMove(board, player: .C)
+            let computerMove = self.findBestMove(self.board, player: .C)
         })
     }
     
@@ -66,14 +66,14 @@ class TTTEngine {
     
     func findBestMove(board: Board, player: Board.PositionState, depth: Int = 0) -> (move: Int, score: Int) {
         if debug {
-            println("FindBestMove")
+            print("FindBestMove")
         }
         var bestScore: Int = worstScore(player)
         var bestMove: Int = -1          // No move yet
         for move in 0...8 {
             var score = worstScore(player)
             if board.isValidMove(move) {
-                var subBoard = Board(copy: board)
+                let subBoard = Board(copy: board)
                 subBoard.board[move] = player
                 if subBoard.hasWon(player) {
                     score = wonScore(player)
@@ -84,7 +84,7 @@ class TTTEngine {
                 }
             }
             if debug {
-                println("FindMinMove Depth: \(depth) Move: \(move) Score: \(score) BestScore: \(bestScore)")
+                print("FindMinMove Depth: \(depth) Move: \(move) Score: \(score) BestScore: \(bestScore)")
             }
             if isBetterScore(player, score: score, bestScore: bestScore) {
                 bestScore = score
@@ -95,7 +95,7 @@ class TTTEngine {
             }
         }
         if debug {
-            println("FindMinMove Depth: \(depth) Best move: \(bestMove) Best score: \(bestScore)")
+            print("FindMinMove Depth: \(depth) Best move: \(bestMove) Best score: \(bestScore)")
         }
         return (bestMove, bestScore)
     }
