@@ -10,4 +10,4 @@ ViewController programmatically creates the app's view and manages game play. Mo
 
 Placehold is present for an Apple Watch extension but not implemented. 
 
-This project is built with and requires Swift 1.2 first introduced on 2/10/2015 as part of Xcode 6.3 beta.
+This project is built with and requires Swift 3.0 as part of Xcode 8 beta.
