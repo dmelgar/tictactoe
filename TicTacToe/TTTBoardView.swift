@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TTTBoardViewDelegate {
-    func playerMoved(playerMove: Int)
+    func playerMoved(_ playerMove: Int)
 }
 
 class TTTBoardView: UIView {
@@ -24,7 +24,7 @@ class TTTBoardView: UIView {
     var side: CGFloat = 0
     var squareSize: CGFloat = 0
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         // Calculate locations of lines
         let width = bounds.width
         let height = bounds.height
@@ -54,33 +54,33 @@ class TTTBoardView: UIView {
         
         // Drawing code
         // Draw a TTT board
-        UIColor.blackColor().set()
-        let context = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(context, 2.0)
+        UIColor.black.set()
+        let context = UIGraphicsGetCurrentContext()!
+        context.setLineWidth(2.0)
         
         // Draw pieces on the board
         for move in 0...8 {
             switch board.board[move] {
-            case .P:
+            case .p:
                 // X
                 strokes += drawX(move)
-            case .C:
+            case .c:
                 drawO(move, context: context)
             default: ()
             }
         }
         
         for stroke in strokes {
-            CGContextMoveToPoint(context, stroke[0], stroke[1]) // x,y
-            CGContextAddLineToPoint(context, stroke[2], stroke[3]) // x, y
-            CGContextStrokePath(context)
+            context.move(to:CGPoint(x:stroke[0], y:stroke[1]))
+            context.addLine(to:CGPoint(x:stroke[2], y:stroke[3]))
+            context.strokePath()
         }
         // Test draw O
         // drawO(4, squareSize: squareSize, context: context)
     }
     
     // Returns array of strokes. Each stroke has 4 coordinates, start x, y, end x, y
-    func drawX(position: Int) -> [[CGFloat]] {
+    func drawX(_ position: Int) -> [[CGFloat]] {
         var strokes = [[CGFloat]]()
         // Or add to array
         let row = position/3
@@ -98,22 +98,22 @@ class TTTBoardView: UIView {
         return strokes
     }
     
-    func drawO(position: Int, context: CGContextRef) {
+    func drawO(_ position: Int, context: CGContext) {
         let xStrokes = drawX(position)
         let stroke = xStrokes[0]
-        let rect = CGRectMake(stroke[0], stroke[1],
-            stroke[2] - stroke[0],  // width
-            stroke[2] - stroke[0])  // height
-        CGContextAddEllipseInRect(context, rect)
-        CGContextStrokePath(context)
+        let rect = CGRect(x: stroke[0], y: stroke[1],
+            width: stroke[2] - stroke[0],  // width
+            height: stroke[2] - stroke[0])  // height
+        context.addEllipse(in: rect)
+        context.strokePath()
     }
     
     // Handle touch
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Ignore multi-touch
         // let touches = event!.allTouches() as? Set<UITouch>
         if touches.count == 1 {
-            if let point = touches.first?.locationInView(self) {
+            if let point = touches.first?.location(in: self) {
                 // Figure out which square the touch is in
                 let playerMove = convertPointToSquare(point)
                 // Let the listener know
@@ -123,7 +123,7 @@ class TTTBoardView: UIView {
     }
     
     // Convert point to square
-    func convertPointToSquare(point: CGPoint) -> Int {
+    func convertPointToSquare(_ point: CGPoint) -> Int {
         let col: Int = Int(point.x / squareSize)
         let row: Int = Int(point.y / squareSize)
         let square = row * 3 + col

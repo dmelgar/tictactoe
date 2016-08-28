@@ -11,7 +11,7 @@ import Foundation
 var debug = false
 
 protocol TTTEngineDelegate {
-    func computerMove(position: Int, status: Board.BoardState)
+    func computerMove(_ position: Int, status: Board.BoardState)
 }
 
 class TTTEngine {
@@ -19,52 +19,53 @@ class TTTEngine {
 
     var board = Board()
     var delegate: TTTEngineDelegate?
-    var state: Board.BoardState = .Valid
+    var state: Board.BoardState = .valid
     
     //
-    func playerMove(position: Int) {
-        board.move(position, player: .P)
-        dispatch_async(DISPATCH_QUEUE_PRIORITY_BACKGROUND, {
-            let computerMove = self.findBestMove(self.board, player: .C)
-        })
+    func playerMove(_ position: Int) {
+        _ = board.move(position, player: .p)
+        
+        DispatchQueue.global(qos:.background).async {
+            _ = self.findBestMove(self.board, player: .c)
+        }
     }
     
     // Utility methods for scoring
     // Way to workaround inability of Swift 1.1 to initialize a non-optional variable to one of two values
     // In Swift 1.2, released 2/9/2015, this is no longer required
-    private func worstScore(player: Board.PositionState) -> Int {
-        if player == .C {
+    fileprivate func worstScore(_ player: Board.PositionState) -> Int {
+        if player == .c {
             return -200
         } else {
             return 200
         }
     }
     
-    private func wonScore(player: Board.PositionState) -> Int {
-        if player == .C {
+    fileprivate func wonScore(_ player: Board.PositionState) -> Int {
+        if player == .c {
             return 100
         } else {
             return -100
         }
     }
     
-    private func getOpponentBestMove(player: Board.PositionState, board: Board, depth: Int = 0) -> (move: Int, score: Int) {
-        if player == .C {
-            return findBestMove(board, player: .P, depth: depth + 1)
+    fileprivate func getOpponentBestMove(_ player: Board.PositionState, board: Board, depth: Int = 0) -> (move: Int, score: Int) {
+        if player == .c {
+            return findBestMove(board, player: .p, depth: depth + 1)
         } else {
-            return findBestMove(board, player: .C, depth: depth + 1)
+            return findBestMove(board, player: .c, depth: depth + 1)
         }
     }
     
-    private func isBetterScore(player: Board.PositionState, score: Int, bestScore: Int) -> Bool {
-        if player == .C {
+    fileprivate func isBetterScore(_ player: Board.PositionState, score: Int, bestScore: Int) -> Bool {
+        if player == .c {
             return score > bestScore
         } else {
             return score < bestScore
         }
     }
     
-    func findBestMove(board: Board, player: Board.PositionState, depth: Int = 0) -> (move: Int, score: Int) {
+    func findBestMove(_ board: Board, player: Board.PositionState, depth: Int = 0) -> (move: Int, score: Int) {
         if debug {
             print("FindBestMove")
         }

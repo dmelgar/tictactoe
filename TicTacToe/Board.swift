@@ -16,40 +16,40 @@ class Board {
     }
     
     enum PositionState {
-        case C // Computer
-        case P // Player
-        case E // Empty. Or should I use nil as empty?
+        case c // Computer
+        case p // Player
+        case e // Empty. Or should I use nil as empty?
     }
     
     enum BoardState {
-        case CWon
-        case PWon
-        case Draw
-        case Invalid
-        case Valid
+        case cWon
+        case pWon
+        case draw
+        case invalid
+        case valid
     }
     
     // Note that setting board is set by value, ie a copy is made of the array
-    var board: [PositionState] = [PositionState](count: 9, repeatedValue: .E)
+    var board: [PositionState] = [PositionState](repeating: .e, count: 9)
     
-    func move(newMove: Int, player: PositionState) -> BoardState {
-        var result: BoardState = .Valid
+    func move(_ newMove: Int, player: PositionState) -> BoardState {
+        var result: BoardState = .valid
         if !isValidMove(newMove) {
-            result = .Invalid
+            result = .invalid
         } else {
             board[newMove] = player
             if isDraw() {
-                result = .Draw
-            } else if hasWon(.C) {
-                result = .CWon
-            } else if hasWon(.P) {
-                result = .PWon
+                result = .draw
+            } else if hasWon(.c) {
+                result = .cWon
+            } else if hasWon(.p) {
+                result = .pWon
             }
         }
         return result
     }
     
-    func hasWon(player: PositionState) -> Bool {
+    func hasWon(_ player: PositionState) -> Bool {
         let winningPatterns = [
             [1, 2, 3],
             [4, 5, 6],
@@ -61,7 +61,7 @@ class Board {
             [3, 5, 7]]
         // Iterate through winning patterns
         var hasWon = true
-        var index = 0
+        _ = 0
         for pattern in winningPatterns {
             hasWon = true
             for i in pattern {
@@ -80,7 +80,7 @@ class Board {
     func isDraw() -> Bool {
         var result = true
         for i in 0...8 {
-            if board[i] == .E {
+            if board[i] == .e {
                 result = false
                 break
             }
@@ -88,7 +88,7 @@ class Board {
         return result
     }
     
-    func isValidMove(move: Int) -> Bool {
-        return board[move] == .E
+    func isValidMove(_ move: Int) -> Bool {
+        return board[move] == .e
     }
 }

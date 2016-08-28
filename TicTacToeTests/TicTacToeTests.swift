@@ -23,78 +23,78 @@ class TicTacToeTests: XCTestCase {
     
     // Do TTD. Set of test cases that grow
     func testForWinTopRow() {
-        var board = Board()
-        board.board = [.C, .C, .C, .E, .E, .E,  .E, .E, .E]
-        XCTAssert(board.hasWon(.C), "Pass")
+        let board = Board()
+        board.board = [.c, .c, .c, .e, .e, .e,  .e, .e, .e]
+        XCTAssert(board.hasWon(.c), "Pass")
     }
     
     func testWinLeftCol() {
-        var board = Board()
+        let board = Board()
         board.board = [
-            .C, .P, .P,
-            .C, .E, .E,
-            .C, .P, .P]
-        XCTAssertTrue(board.hasWon(.C), "Pass")
+            .c, .p, .p,
+            .c, .e, .e,
+            .c, .p, .p]
+        XCTAssertTrue(board.hasWon(.c), "Pass")
     }
     
     func testNotWin() {
         let board = Board()
-        board.board = [.C, .C, .P, .E, .E, .E,  .E, .E, .E]
-        XCTAssert(!board.hasWon(.C), "Pass")
+        board.board = [.c, .c, .p, .e, .e, .e,  .e, .e, .e]
+        XCTAssert(!board.hasWon(.c), "Pass")
     }
     
     func testDraw() {
         let board = Board()
-        board.board = [.P, .P, .C,  .C, .C, .P,  .P, .C, .C]
+        board.board = [.p, .p, .c,  .c, .c, .p,  .p, .c, .c]
         XCTAssert(board.isDraw(), "Pass")
-        XCTAssert(!board.hasWon(.C), "Pass")
+        XCTAssert(!board.hasWon(.c), "Pass")
     }
     
     func testMinMove() {
         let board = Board()
         let engine = TTTEngine()
         board.board = [
-            .P, .P, .E,
-            .E, .C, .C,
-            .C, .E, .E]
-        let result = engine.findBestMove(board, player: .P)
+            .p, .p, .e,
+            .e, .c, .c,
+            .c, .e, .e]
+        _ = engine.findBestMove(board, player: .p)
         // let result = engine.findMinMove(board)
         // XCTAssertFalse(find([2], result.move) == nil, "Fail move=\(result.move) score=\(result.move)")
     }
     
     func testBestMove() {
-        self.measureBlock({
+        self.measure({
             let board = Board()
             board.board = [
-                .C, .C, .E,
-                .P, .E, .E,
-                .P, .E, .E]
+                .c, .c, .e,
+                .p, .e, .e,
+                .p, .e, .e]
             self.nextMoveEvaluation(board, moveSet: [2], testcase: 1)
             
             // Winning game sequence.
             board.board = [
-                .E, .P, .E,
-                .E, .C, .E,
-                .E, .E, .E]
+                .e, .p, .e,
+                .e, .c, .e,
+                .e, .e, .e]
             self.nextMoveEvaluation(board, moveSet: [0, 2], testcase: 10)
             board.board = [
-                .C, .P, .E,
-                .E, .C, .E,
-                .E, .E, .P]
+                .c, .p, .e,
+                .e, .c, .e,
+                .e, .e, .p]
             self.nextMoveEvaluation(board, moveSet: [3, 6], testcase: 11)
             board.board = [
-                .C, .P, .P,
-                .E, .C, .E,
-                .C, .E, .P]
+                .c, .p, .p,
+                .e, .c, .e,
+                .c, .e, .p]
             self.nextMoveEvaluation(board, moveSet: [3], testcase: 12)
         })
     }
     
-    func nextMoveEvaluation(board: Board, moveSet: [Int], testcase: Int) {
+    func nextMoveEvaluation(_ board: Board, moveSet: [Int], testcase: Int) {
         let engine = TTTEngine()
         // let bestMove = engine.findMaxMove(board)
-        let bestMove = engine.findBestMove(board, player: .C)
-        let result = moveSet.indexOf(bestMove.move)
+        let bestMove = engine.findBestMove(board, player: .c)
+        let result = moveSet.index(of: bestMove.move)
         // let result = find(moveSet, bestMove.move)
         print("TestBestMove/nextMoveEvalutation Testcase: \(testcase) Move: \(bestMove.move) Score: \(bestMove.score)")
         XCTAssertFalse(result == nil, "Fail testcase=\(testcase)")
